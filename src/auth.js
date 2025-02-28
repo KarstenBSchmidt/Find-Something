@@ -13,8 +13,6 @@ export const Register = async (username, email, password) => {
         // error print
         console.log(error.messsage);
     }
-    } else {
-        return false;
     }
 }
 
