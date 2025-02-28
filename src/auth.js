@@ -1,7 +1,7 @@
 // This file manages Firebase authentication. For documentation refer to: https://firebase.google.com/docs/auth/web/start#web
 
 import { auth } from './firebase';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
 
 // Registers a user using an asnychronous function & firebase auth register function. Returns the user
 export const Register = async (username, email, password) => {
@@ -14,7 +14,7 @@ export const Register = async (username, email, password) => {
         console.log(error.messsage);
     }
     }
-}
+};
 
 // Login a user using an asnychronous function & firebase auth sign-in function. Returns the user
 export const Login = async (email, password) => {
@@ -24,6 +24,10 @@ export const Login = async (email, password) => {
     } catch (error) {
         console.log(error.messsage);
     }
-}
+};
+
+export const Logout = async () => {
+    return signOut(auth);
+};
 
 
