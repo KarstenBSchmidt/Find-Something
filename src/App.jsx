@@ -25,7 +25,7 @@ function App() {
     { !user ? (
       <AuthenticationComponent />
     ) : (
-      // This would be a logged in user (show whatever we need here...)
+      // This would be a logged in user (show whatever we need here...) Just include the login component in it / where we want it.
       <LogoutComponent />
     )
 
