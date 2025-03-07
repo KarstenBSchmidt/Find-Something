@@ -17,8 +17,6 @@ export const Register = async (username, email, password) => {
         if(!userDetails.user || !userDetails.user.uid){
             throw new Error("An error occurred. Please try again.");
         }
-
-        console.log(userDetails.user);
         // Add user to the database
         await setDoc(doc(db, "users", userDetails.user.uid), {
             uid: userDetails.user.uid,
@@ -40,7 +38,8 @@ export const Login = async (email, password) => {
         const userDetails = await signInWithEmailAndPassword(auth, email, password);
         return userDetails.user;
     } catch (error) {
-        console.log(error.messsage);
+        console.log(error.message);
+        throw new Error("Invalid email or password. Please try again.");
     }
 };
 
