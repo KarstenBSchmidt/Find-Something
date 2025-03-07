@@ -7,7 +7,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } f
 export const Register = async (username, email, password) => {
 
     try {
-        // see if username is taken
+        // Check if username is taken
         if(await checkUsername(username)){
             throw new Error("Username taken! Try another.");
         }
@@ -44,6 +44,7 @@ export const Login = async (email, password) => {
     }
 };
 
+// logout user
 export const Logout = async () => {
     try {
         await signOut(auth);
@@ -53,6 +54,7 @@ export const Logout = async () => {
       }
 };
 
+// check fo a unique username
 const checkUsername = async (username) => {
     const usersRef = collection(db, "users");
     const search = query(usersRef, where("lowercasedUsername", "==", username.toLowerCase()));
