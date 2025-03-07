@@ -18,9 +18,9 @@ function Challenge() {
         const query = `
             [out:json];
             (
-                node[leisure=park](around:${distance}, ${startCoords[0]}, ${startCoords[1]});
-                way[leisure=park](around:${distance}, ${startCoords[0]}, ${startCoords[1]});
-                relation[leisure=park](around:${distance}, ${startCoords[0]}, ${startCoords[1]});
+                nwr[leisure](around:${distance}, ${startCoords[0]}, ${startCoords[1]});
+                nwr[natural](around:${distance}, ${startCoords[0]}, ${startCoords[1]});
+                nwr[artwork_type](around:${distance}, ${startCoords[0]}, ${startCoords[1]});
             );
             out center;
         `;
@@ -45,18 +45,19 @@ function Challenge() {
 
     return (
         <div className="challenge-container">
-            <h1>Challenge: Find a Park</h1>
+            <h1>Find Something</h1>
+            <p>Currently, searches for nearby parks, natural features (EG forests), as well as artwork like statues and sculptures.</p>
             <label htmlFor="distance-slider">Select Distance: {distance} meters</label>
             <input 
                 type="range" 
                 id="distance-slider" 
-                min="500" 
+                min="100" 
                 max="10000" 
                 step="100" 
                 value={distance} 
                 onChange={(e) => setDistance(Number(e.target.value))} 
             />
-            <button onClick={fetchNearestPark}>Find Park</button>
+            <button onClick={fetchNearestPark}>Bring it On!</button>
             {destination && <Routing inputEndLat={destination.lat} inputEndLon={destination.lon} />}
         </div>
     );
