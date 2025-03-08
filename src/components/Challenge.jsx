@@ -46,19 +46,28 @@ function Challenge() {
     return (
         <div className="challenge-container">
             <h1>Find Something</h1>
-            <p>Currently, searches for nearby parks, natural features (EG forests), as well as artwork like statues and sculptures.</p>
-            <label htmlFor="distance-slider">Select Distance: {distance} meters</label>
-            <input 
-                type="range" 
-                id="distance-slider" 
-                min="100" 
-                max="10000" 
-                step="100" 
-                value={distance} 
-                onChange={(e) => setDistance(Number(e.target.value))} 
-            />
-            <button onClick={fetchNearestPark}>Bring it On!</button>
-            {destination && <Routing inputEndLat={destination.lat} inputEndLon={destination.lon} />}
+            <p>Find parks, forests, artwork, and more.</p>
+            <div id="inputContainer">
+                <div id="sliderWithCaption">
+                    <label htmlFor="distance-slider">{distance} meters</label>
+                    <input 
+                        type="range" 
+                        id="distance-slider" 
+                        min="100" 
+                        max="10000" 
+                        step="100" 
+                        value={distance} 
+                        onChange={(e) => setDistance(Number(e.target.value))} 
+                    />
+                </div>
+                
+                <button onClick={fetchNearestPark}>Bring it On!</button>
+            </div>
+            
+            <div id="routingContainer">
+                {destination && <Routing inputEndLat={destination.lat} inputEndLon={destination.lon} />}
+            </div>
+            
         </div>
     );
 }
