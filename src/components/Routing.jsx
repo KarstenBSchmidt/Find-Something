@@ -5,7 +5,7 @@ import "./Routing.css";
 
 const transportationMode = "foot";
 // For now, this is just a string (and it's my own personal key so don't get any funny ideas!). 
-// If we have time, we should move this to a .env file.
+// TODO: If we have time, we should move this to a .env file.
 const graphHopperApiKey = "fd70d72c-e0ae-476c-8001-c769b2269239";
 
 function Routing({ inputEndLat, inputEndLon, destinationName }) {
@@ -62,7 +62,7 @@ function Routing({ inputEndLat, inputEndLon, destinationName }) {
 
                 // Draw the route using the returned coordinates
                 const routeCoords = routeData.paths[0].points.coordinates.map(coord => [coord[1], coord[0]]);
-                routeLayerRef.current = L.polyline(routeCoords, { color: "blue", weight: 5 }).addTo(mapRef.current);
+                routeLayerRef.current = L.polyline(routeCoords, { color: "blue", weight: 5, opacity: 0.4 }).addTo(mapRef.current);
 
                 // Mark the destination on the map
                 if (dstMarker.current) {
@@ -85,8 +85,7 @@ function Routing({ inputEndLat, inputEndLon, destinationName }) {
     }, [startCoords, inputEndLat, inputEndLon]);
 
     // All Routing does is create and display a map. 
-    // I'm not super happy with the dimensions of the map, 
-    // but at the same time I really can't figure out how to fix it.
+    // TODO: I'm not super happy with the dimensions of the map, but at the same time I really can't figure out how to fix it.
     return <div id="map" />;
 }
 

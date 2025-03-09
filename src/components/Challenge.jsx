@@ -33,8 +33,7 @@ function Challenge() {
                 nwr[tourism=viewpoint](around:${distance}, ${startCoords[0]}, ${startCoords[1]}); 
 
                 nwr[leisure=park](around:${distance}, ${startCoords[0]}, ${startCoords[1]});
-                nwr[leisure=garden](around:${distance}, ${startCoords[0]}, ${startCoords[1]});
-                nwr[leisure=playground](around:${distance}, ${startCoords[0]}, ${startCoords[1]});
+                nwr[leisure=garden][name](around:${distance}, ${startCoords[0]}, ${startCoords[1]});
                 nwr[leisure=dog_park](around:${distance}, ${startCoords[0]}, ${startCoords[1]});
                 nwr[leisure=water_park](around:${distance}, ${startCoords[0]}, ${startCoords[1]});
                 nwr[leisure=stadium](around:${distance}, ${startCoords[0]}, ${startCoords[1]});
@@ -94,12 +93,12 @@ function Challenge() {
                     return;
                 }
             }
-            
-            // The nearest place is the first element in the response
-            //const allElements = data.elements;
 
             // Order data.elements by closest to farthest using `distance` meters from startCoords
             // An element that is 5km away from startcoords with input distance of 10km will be sorted before an element that is 6km away
+            //! Note that this is not walking distance, but straight-line distance
+            // TODO: If we have time, we can calculate the actual walking distance using the GraphHopper API
+            // ^ This is costly, so we might not want to implement that at all either
             data.elements.sort((a, b) => {
                 const getCoords = (element) => {
                     if (element.lat !== undefined && element.lon !== undefined) {
@@ -124,24 +123,12 @@ function Challenge() {
                 return aCloseness - bCloseness;
             });
             
-            const nearest = data.elements[0]; // Safely get the nearest element
-            
-            
-            // Extract name or use a fallback name ("Destination")
-            function capitalizeFirstLetter(string) {
-                return string.charAt(0).toUpperCase() + string.slice(1);
-            }
+            // Get the element that is the closest to the desired distance
+            const nearest = data.elements[0];
 
             // Get the name of the place using the name, tourism, natural, or historic tag
             // If it doesn't have any of those tags, use "Destination"
-            const name = capitalizeFirstLetter(
-                nearest.tags?.name || 
-                nearest.tags?.tourism || 
-                nearest.tags?.natural || 
-                nearest.tags?.historic || 
-                "Destination"
-            );
-            
+            const name = getName(nearest);
 
             // Set the destination for routing, then log
             // Store all found places and reset index to 0
@@ -154,6 +141,26 @@ function Challenge() {
         }
     };
 
+    const capitalizeFirstLetter = (string) => string.charAt(0).toUpperCase() + string.slice(1);
+    const getFirstTagValue = (tags) => {
+        if (!tags || Object.keys(tags).length === 0) return null; // Ensure tags exist and are not empty
+        return tags[Object.keys(tags)[0]]; // Get the value of the first key
+    };
+    const getName = (place) => {
+        if (place.tags?.name) {
+            return capitalizeFirstLetter(place.tags.name);
+        }
+        else {
+            return "Unnamed " + capitalizeFirstLetter(
+                place.tags?.tourism || 
+                place.tags?.natural || 
+                place.tags?.historic || 
+                getFirstTagValue(place.tags) ||
+                "Destination"
+            );
+        }
+    };
+
     // Function to update the current destination based on a selected place
     const updateDestination = (place) => {
         if (!place) return;
@@ -161,25 +168,9 @@ function Challenge() {
         // Determine latitude and longitude, using center coordinates for ways/relations
         const lat = place.type === "way" || place.type === "relation" ? place.center.lat : place.lat;
         const lon = place.type === "way" || place.type === "relation" ? place.center.lon : place.lon;
-
-        // Helper functions for getting the name of a place
-        const capitalizeFirstLetter = (string) => string.charAt(0).toUpperCase() + string.slice(1);
-        const getFirstTagValue = (tags) => {
-            if (!tags || Object.keys(tags).length === 0) return null; // Ensure tags exist and are not empty
-            return tags[Object.keys(tags)[0]]; // Get the value of the first key
-        };
         
         // Try predefined keys first, then fall back to the first tag's value
-        const name = capitalizeFirstLetter(
-            place.tags?.name || 
-            place.tags?.tourism || 
-            place.tags?.natural || 
-            place.tags?.historic || 
-            place.tags?.man_made || 
-            place.tags?.building ||
-            getFirstTagValue(place.tags) || 
-            "Destination"
-        );
+        const name = getName(place);
 
         // Update the state with the new destination
         setDestination({ lat, lon, name });
