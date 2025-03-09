@@ -4,13 +4,22 @@ import "leaflet/dist/leaflet.css";
 import "./Routing.css";
 
 const transportationMode = "foot";
+// For now, this is just a string (and it's my own personal key so don't get any funny ideas!). 
+// If we have time, we should move this to a .env file.
 const graphHopperApiKey = "fd70d72c-e0ae-476c-8001-c769b2269239";
 
-function Routing({ inputEndLat, inputEndLon }) {
-    console.log("Routing to " + inputEndLat + ", " + inputEndLon);
+function Routing({ inputEndLat, inputEndLon, destinationName }) {
+    // Uncomment the following line to see the destination coordinates in the console
+    // These are live updates rather than "we're actually going now!"
+    // console.log("Routing to " + inputEndLat + ", " + inputEndLon);
+
+    // useRef(null) is a common pattern for storing mutable values that don't trigger re-renders
+    // So even though stuff like the dstMarker.current value changes, the component won't re-render
     const [startCoords, setStartCoords] = useState(null);
     const mapRef = useRef(null);
     const routeLayerRef = useRef(null);
+    const dstMarker = useRef(null);
+
 
     // Initialize startCoords once via geolocation
     useEffect(() => {
@@ -41,7 +50,8 @@ function Routing({ inputEndLat, inputEndLon }) {
         }
 
         // Fetch new route data
-        console.log("Actually routing to " + inputEndLat + ", " + inputEndLon);
+        // Uncomment the following line to see the destination coordinates in the console once we've actually started routing
+        // console.log("Actually routing to " + inputEndLat + ", " + inputEndLon);
         fetch(`https://graphhopper.com/api/1/route?point=${startCoords[0]},${startCoords[1]}&point=${inputEndLat},${inputEndLon}&vehicle=${transportationMode}&locale=en&key=${graphHopperApiKey}&points_encoded=false`)
             .then(response => response.json())
             .then(routeData => {
@@ -55,11 +65,28 @@ function Routing({ inputEndLat, inputEndLon }) {
                 routeLayerRef.current = L.polyline(routeCoords, { color: "blue", weight: 5 }).addTo(mapRef.current);
 
                 // Mark the destination on the map
-                L.marker([inputEndLat, inputEndLon]).addTo(mapRef.current);
+                if (dstMarker.current) {
+                    mapRef.current.removeLayer(dstMarker.current);
+                }
+
+                // TODO: If we have time, make a custom marker for the destination
+                // const dstIcon = L.icon({
+                //     iconUrl: "https://cdn-icons-png.flaticon.com/512/149/149060.png",
+                //     iconSize: [32, 32],
+                //     iconAnchor: [16, 32],
+                // });
+                // dstMarker.current = L.marker([inputEndLat, inputEndLon], { icon: dstIcon }).addTo(mapRef.current);
+                dstMarker.current = L.marker([inputEndLat, inputEndLon]).addTo(mapRef.current);
+                // Add a popup to the marker
+                const distance = (routeData.paths[0].distance / 1000).toFixed(2);
+                dstMarker.current.bindPopup(destinationName + "\n" + distance + "km.").openPopup();
             })
             .catch(error => console.error("Error fetching route:", error));
     }, [startCoords, inputEndLat, inputEndLon]);
 
+    // All Routing does is create and display a map. 
+    // I'm not super happy with the dimensions of the map, 
+    // but at the same time I really can't figure out how to fix it.
     return <div id="map" />;
 }
 
