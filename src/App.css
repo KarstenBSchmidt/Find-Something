@@ -1,5 +1,5 @@
 #root {
-  max-width: 1280px;
+  max-width: 95vw;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
@@ -45,4 +45,54 @@ button {
   color: white;
   background-color: gray;
   border: 1px solid black;
+  gap: 10px; 
+  margin: 10px; 
+}
+
+.main-buttons {
+  display: flex;
+  flex-direction: row; 
+  justify-content: center;
+  gap: 1em;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  align-items: center;
+  justify-content: flex-start; 
+  justify-self: start; 
+}
+
+.container-column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; 
+  align-items: center;
+  justify-content: flex-start; 
+}
+
+.container-row {
+  display: flex;
+  flex-direction: row;
+  gap: 10px; 
+  align-items: center;
+  justify-content: flex-start; 
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1em;
+}
+
+.logout {
+  display: flex;
+
+
+  justify-self: flex-end;
+  gap: 1em;
 }
