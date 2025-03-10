@@ -81,6 +81,26 @@ button {
   justify-content: flex-start; 
 }
 
+.section {
+  background: linear-gradient(45deg, #212222, #26352d);
+  border: 2px solid #556057;
+  border-style: ridge;
+  padding: 1.5rem;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  margin-top: 0px; 
+  align-items: flex-start; 
+  justify-content: flex-start;
+}
+
+ul {
+  justify-content: flex-start;
+}
+
+li {
+  justify-self: flex-start
+}
+
 header {
   display: flex;
   flex-direction: column;

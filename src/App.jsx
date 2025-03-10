@@ -28,6 +28,11 @@ function App() {
 
   return (
     <>
+
+    {!user && (
+      <AuthenticationComponent />
+    )}
+
     <div classname="main-container">
     <header>
       <h1>Find Something</h1>
@@ -48,32 +53,32 @@ function App() {
       )}
     </header>
     </div>
-
-    <div className="container-row">
-    {viewChallenge && (
-      <Challenge />
-    )}
-
-    {viewRouting && (
-      <Routing />
-    )}
-
-    {viewImageCompare && (
-      <CompareImage />
-    )}
-    </div>
     
-    {!user && (
-      <AuthenticationComponent />
-    )}
+    <div className="container-row">
+      {viewChallenge && (
+        <div className="section">
+          <Challenge />
+        </div>
+      )}
+     
+      {viewRouting && (
+        <div className="section">
+          <Routing />
+        </div>
+      )}
+      
+      {viewImageCompare && (
+        <div className="section">
+          <CompareImage />
+        </div>
+      )}  
+    </div>
 
-<div className="logout">
-    {user && (
-
-    <LogoutComponent />
-    )} 
- 
- </div>
+    <div className="logout">
+      {user && (
+        <LogoutComponent />
+      )}  
+    </div>
      
     </>
   )
