@@ -12,7 +12,6 @@ import { onAuthStateChanged } from 'firebase/auth'
 function App() {
   const [user, setUser] = useState(null); // Track the user's state
   const [viewChallenge, setViewChallenge] = useState(false); // Track the viewChallenge state
-  const [viewRouting, setViewRouting] = useState(false); // Track the viewRouting state
   const [viewImageCompare, setViewImageCompare] = useState(false); // Track the viewImageCompare state
 
   useEffect(() => {
@@ -33,41 +32,35 @@ function App() {
       <AuthenticationComponent />
     )}
 
+
     <div classname="main-container">
-    <header>
-      <h1>Find Something</h1>
+
       {user && (
+      <header>
+        <h1>Find Something</h1>
         <div classNmae="container-column">
         <button onClick={() => setViewChallenge(!viewChallenge)}>
           {viewChallenge ? "Hide" : "View"} Challenges
-        </button>
-
-        <button onClick={() => setViewRouting(!viewRouting)}>
-          {viewRouting ? "Hide" : "View"} Routing
         </button>
 
         <button onClick={() => setViewImageCompare(!viewImageCompare)}>
           {viewImageCompare ? "Hide" : "View"} Image Compare  
         </button>
         </div>
+        </header>
       )}
-    </header>
+    
     </div>
     
     <div className="container-row">
-      {viewChallenge && (
+      {viewChallenge && user && (
         <div className="section">
           <Challenge />
         </div>
       )}
      
-      {viewRouting && (
-        <div className="section">
-          <Routing />
-        </div>
-      )}
       
-      {viewImageCompare && (
+      {viewImageCompare && user && (
         <div className="section">
           <CompareImage />
         </div>
@@ -79,8 +72,11 @@ function App() {
         <LogoutComponent />
       )}  
     </div>
+
+
+
      
-    </>
+</>
   )
 }
 

@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
-import * as tf from "@tensorflow/tfjs";  // <-- Add this import
+import * as tf from "@tensorflow/tfjs"; 
 import * as mobilenet from "@tensorflow-models/mobilenet";
-
-// Define simple Card component
-
 
 const targetObjects = [
   "cat",
@@ -16,7 +13,15 @@ const targetObjects = [
   "clock",
   "chair",
   "table",
-  "bottle"
+  "bottle", 
+  "car", 
+  "truck",
+  "bus",
+  "traffic light",
+  "fire hydrant",
+  "parking meter",
+  "bench", 
+  "tree"
 ];
 
 const CompareImage = () => {
@@ -27,7 +32,7 @@ const CompareImage = () => {
   const [score, setScore] = useState(0);
   const [message, setMessage] = useState("");
 
-  // Set the TensorFlow backend and load the model
+  // Set TensorFlow backend and load the model
   useEffect(() => {
     const setupModel = async () => {
       try {
@@ -45,7 +50,9 @@ const CompareImage = () => {
     setupModel();
   }, []);
   
-  // Generate a random target from our list
+  // Generate a random target from the list
+  // Reference: https://www.tensorflow.org/js/models
+  // Look up the full list of objects that the TensorFlow model can recognize and update in CompareImage.jsx
   const generateTarget = () => {
     const randomTarget =
       targetObjects[Math.floor(Math.random() * targetObjects.length)];
@@ -72,6 +79,9 @@ const CompareImage = () => {
     }
   };
 
+  // Analyze the uploaded image and compare it to the target using MobileNet
+  // Reference: https://www.tensorflow.org/js/models
+  //            https://www.tensorflow.org/js/tutorials/transfer/image_classification
   const analyzeImage = async () => {
     if (!model) {
       console.log("Model is not loaded yet.");
@@ -80,12 +90,14 @@ const CompareImage = () => {
     }
     if (!image) {
       console.log("No image selected.");
-      setMessage("Please upload an image first.");
+      setMessage("Take a picture first.");
       return;
     }
 
     try {
-      // Create a temporary image element for analysis
+      // Create a temporary image element from the uploaded image
+      // - Used to decode the image before passing it to MobileNet
+      // Reference: https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/decode
       const imgElement = document.createElement("img");
       imgElement.src = image;
       console.log("Starting to decode the image...");
@@ -97,7 +109,7 @@ const CompareImage = () => {
       console.log("Predictions received:", predictions);
       setResults(predictions);
 
-      // Check if any prediction matches the target (case-insensitive)
+      // Check if any prediction matches the target (not worried about case sensitivity)
       const isMatch = predictions.some((prediction) =>
         prediction.className.toLowerCase().includes(target.toLowerCase())
       );
@@ -105,30 +117,29 @@ const CompareImage = () => {
       if (isMatch) {
         setScore((prevScore) => {
           const newScore = prevScore + 1;
-          setMessage(`Correct! You captured a ${target}. Score: ${newScore}`);
+          setMessage(`Yep, that's a ${target}!`);
           return newScore;
         });
       } else {
-        setMessage(`Incorrect. That doesn't seem to be a ${target}. Try again.`);
+        setMessage(`Thats not a ${target}`);
       }
     } catch (error) {
-      console.error("Error during image analysis:", error);
+      console.error("Error anaylzing image:", error);
       setMessage("An error occurred during analysis.");
     }
   };
 
   return (
     <div >
-      <h1 className>Find Stuff To Take Pictures Of</h1>
       {target && (
-        <h2 className="text-xl">
-          Find some <span className="font-semibold">{target}s</span>
+        <h2>
+          Find some <span className="highlight-text">{target}s</span>
         </h2>
       )}
-      <div className="flex gap-4">
+      <div className="container-row">
         <button onClick={generateTarget}>New Target</button>
         <button onClick={analyzeImage} disabled={!model || !image}>
-          Compare Image
+          Analyze Image
         </button>
       </div>
       <div className="container-column">
@@ -146,8 +157,8 @@ const CompareImage = () => {
         </div>
       )}
       {results.length > 0 && (
-        <div className="section">
-            <h2>That looks like a:</h2>
+        <div className="sub-section">
+            <h2 className="sub-section-header">That looks like a:</h2>
             <ul>
               {results.map((result, index) => (
                 <li key={index}>

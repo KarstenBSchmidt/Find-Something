@@ -60,9 +60,11 @@ button {
   display: flex;
   flex-direction: column;
   gap: 1em;
-  align-items: center;
+  align-items: flex-start;
   justify-content: flex-start; 
-  justify-self: start; 
+  justify-self: start;
+  max-width: 95vw;
+  margin: 0 auto; 
 }
 
 .container-column {
@@ -76,21 +78,45 @@ button {
 .container-row {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   gap: 10px; 
-  align-items: center;
-  justify-content: flex-start; 
+  align-items: stretch;
+  justify-content: center; 
 }
 
 .section {
   background: linear-gradient(45deg, #212222, #26352d);
   border: 2px solid #556057;
   border-style: ridge;
-  padding: 1.5rem;
+  padding: 15px;
   border-radius: 10px;
   margin-bottom: 20px;
   margin-top: 0px; 
   align-items: flex-start; 
   justify-content: flex-start;
+  justify-self: flex-start; 
+}
+
+.sub-section{ 
+  background: linear-gradient(45deg, #575959, #40594c);
+  padding: 15px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  margin-top: 0px; 
+  align-items: flex-start; 
+  justify-content: flex-start;
+  justify-self: center; 
+}
+
+.sub-section-header {
+  margin-bottom: 5px; 
+}
+
+.highlight-text {
+  color: #03ffab;
+  font-size: 1.5em;
+  font-weight: bold;
+
 }
 
 ul {
@@ -107,6 +133,15 @@ header {
   align-items: center;
   justify-content: flex-start;
   gap: 1em;
+}
+
+img {
+  border-radius: 6px;
+  margin: 10px; 
+  max-width: 300px; 
+  border: 2px solid #556057;
+  border-style: ridge;
+  
 }
 
 .logout {

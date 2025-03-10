@@ -206,9 +206,12 @@ function Challenge() {
                 {places.length > 1 && <button onClick={handleReRoll}>Re-roll!</button>}
             </div>
             
+            {/* added this so the routing comopnent is only rendered once a place is found */}
+            {places.length > 0 && (
             <div id="routingContainer">
                 {destination && <Routing inputEndLat={destination.lat} inputEndLon={destination.lon} destinationName={destination.name} />}
             </div>
+            )}
         </div>
     );
 }
