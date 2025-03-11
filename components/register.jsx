@@ -39,7 +39,7 @@ export const RegisterComponent = ({ setLogin }) => {
                 <input type="password" placeholder="Password" value={password} onChange={(input) => setPassword(input.target.value)} required></input>
            
                 <button className="register-button" type="submit">Register</button>
-                <p onClick={() => setLogin(true)}><a>Already have an account? Login!</a></p>
+                <p onClick={() => setLogin(true)}><a>Already have an account?<span className="register-link"> Login!</span></a></p>
             </form>
             </div>
    

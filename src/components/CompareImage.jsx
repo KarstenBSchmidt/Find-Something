@@ -149,7 +149,12 @@ const CompareImage = () => {
           alt="Uploaded"
         />
       )}
-      <input type="file" accept="image/*" onChange={handleImageUpload} />
+      <input 
+        type="file" 
+        accept="image/*" 
+        onChange={handleImageUpload}
+        style={{justifySelf: "center"}} 
+        />
       </div>
       {message && (
         <div>
