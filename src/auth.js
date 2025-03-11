@@ -7,6 +7,12 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } f
 export const Register = async (username, email, password) => {
 
     try {
+        const regex = /^[a-zA-Z0-9_]+$/;
+        if(username.length < 3){
+            throw new Error("Username must be at least 3 characters long.");
+        } else if (regex.test(username) === false){
+            throw new Error("Username must contain only letters, numbers, and underscores.");
+        }
         // Check if username is taken
         if(await checkUsername(username)){
             throw new Error("Username taken! Try another.");
@@ -27,8 +33,7 @@ export const Register = async (username, email, password) => {
         });
         
     } catch (error) {
-        console.log(error.message);
-        throw new Error("Invalid email or password. Please try again.");
+        throw new Error(error.message);
     }
 };
 
