@@ -28,17 +28,10 @@ function App() {
   return (
     <>
 
-    {!user && (
-      <AuthenticationComponent />
-    )}
-
-
-    <div classname="main-container">
-
-      {user && (
-      <header>
-        <h1>Find Something</h1>
-        <div classNmae="container-column">
+    <header>
+      <h1 className="page-title">Find Something</h1>
+      {user && (      
+      <div className="container-row">
         <button onClick={() => setViewChallenge(!viewChallenge)}>
           {viewChallenge ? "Hide" : "View"} Challenges
         </button>
@@ -46,9 +39,19 @@ function App() {
         <button onClick={() => setViewImageCompare(!viewImageCompare)}>
           {viewImageCompare ? "Hide" : "View"} Image Compare  
         </button>
-        </div>
-        </header>
-      )}
+      </div>   
+    )}
+    </header>
+    
+    
+
+    {!user && (
+      <AuthenticationComponent />
+    )}
+    
+
+
+    <div classname="main-container">
     
     </div>
     
