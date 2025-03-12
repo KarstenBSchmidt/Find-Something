@@ -132,14 +132,20 @@ const CompareImage = () => {
   return (
     <div >
       {target && (
-        <h2>
-          Find some <span className="highlight-text">{target}s</span>
-        </h2>
+        <>
+            <h2>
+                Find some
+            </h2>
+            <h2>
+                <span className="highlight-text">{target}s</span>
+            </h2>
+        </>
+        
       )}
       <div className="container-row">
         <button onClick={generateTarget}>New Target</button>
         <button onClick={analyzeImage} disabled={!model || !image}>
-          Analyze Image
+          Analyze
         </button>
       </div>
       <div className="container-column">
