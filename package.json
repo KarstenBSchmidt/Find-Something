@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tensorflow-models/mobilenet": "^2.1.1",
+    "@tensorflow/tfjs": "^4.22.0",
     "firebase": "^11.4.0",
     "leaflet": "^1.9.4",
     "react": "^19.0.0",
