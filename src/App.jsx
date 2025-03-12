@@ -8,18 +8,21 @@ import ToggleButton from './components/ToggleButton'
 import CompareImage from './components/CompareImage'
 import { auth } from './firebase'
 import { onAuthStateChanged } from 'firebase/auth'
+import ListChallenges from './components/ListChallenges'
 
 import cameraOn from './assets/cameraOn.png'
 import cameraOff from './assets/cameraOff.png'
 import bikeOn from './assets/bikeOn.png'
 import bikeOff from './assets/bikeOff.png'
+import crownOn from './assets/crownOn.png'
+import crownOff from './assets/crownOff.png'
 
 
 function App() {
   const [user, setUser] = useState(null); // Track the user's state
   const [viewChallenge, setViewChallenge] = useState(false); // Track the viewChallenge state
   const [viewImageCompare, setViewImageCompare] = useState(false); // Track the viewImageCompare state
-
+  const [viewPrevious, setViewPrevious] = useState(false); // Track the viewPrevious state
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if(user){
@@ -80,8 +83,23 @@ function App() {
           <CompareImage />
         </div>
       )}  
+
+      {viewPrevious && user && (
+        <div className="section">
+          <ListChallenges />
+        </div>
+      )}
     </div>
 
+    <div className="container-row">
+        <ToggleButton 
+            text="Previous Challenges" 
+            enabledImage={crownOn} 
+            disabledImage={crownOff} 
+            onClick={() => setViewPrevious(prev => !prev)}
+        />
+      </div>
+    
     <div className="logout">
       {user && (
         <LogoutComponent />
