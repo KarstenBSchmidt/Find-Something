@@ -26,43 +26,11 @@ function Challenge() {
             (
                 nwr[artwork_type](around:${distance}, ${startCoords[0]}, ${startCoords[1]});
                 nwr[tourism=artwork](around:${distance}, ${startCoords[0]}, ${startCoords[1]}); 
-
                 nwr[waterway=waterfall](around:${distance}, ${startCoords[0]}, ${startCoords[1]});
                 nwr[amenity=fountain](around:${distance}, ${startCoords[0]}, ${startCoords[1]});
                 nwr[bridge=boardwalk](around:${distance}, ${startCoords[0]}, ${startCoords[1]});
                 nwr[tourism=viewpoint](around:${distance}, ${startCoords[0]}, ${startCoords[1]}); 
-
-                nwr[leisure=park](around:${distance}, ${startCoords[0]}, ${startCoords[1]});
-                nwr[leisure=garden][name](around:${distance}, ${startCoords[0]}, ${startCoords[1]});
-                nwr[leisure=dog_park](around:${distance}, ${startCoords[0]}, ${startCoords[1]});
-                nwr[leisure=water_park](around:${distance}, ${startCoords[0]}, ${startCoords[1]});
-                nwr[leisure=stadium](around:${distance}, ${startCoords[0]}, ${startCoords[1]});
-
-                nwr[station](around:${distance}, ${startCoords[0]}, ${startCoords[1]});
-
-                nwr[natural=cave_entrance](around:${distance}, ${startCoords[0]}, ${startCoords[1]}); 
-                nwr[natural=cliff](around:${distance}, ${startCoords[0]}, ${startCoords[1]}); 
-                nwr[natural=volcano][volcano:status=dormant](around:${distance}, ${startCoords[0]}, ${startCoords[1]}); 
-                nwr[natural=spring](around:${distance}, ${startCoords[0]}, ${startCoords[1]}); 
-                nwr[natural=beach](around:${distance}, ${startCoords[0]}, ${startCoords[1]}); 
-                nwr[natural=geyser](around:${distance}, ${startCoords[0]}, ${startCoords[1]}); 
-
-                nwr[historic=ruins](around:${distance}, ${startCoords[0]}, ${startCoords[1]}); 
-                nwr[historic=castle](around:${distance}, ${startCoords[0]}, ${startCoords[1]}); 
-                nwr[historic=monument](around:${distance}, ${startCoords[0]}, ${startCoords[1]}); 
-                nwr[historic=archaeological_site](around:${distance}, ${startCoords[0]}, ${startCoords[1]}); 
-                nwr[historic=memorial](around:${distance}, ${startCoords[0]}, ${startCoords[1]}); 
-
-                nwr[building=yes][architect](around:${distance}, ${startCoords[0]}, ${startCoords[1]}); 
-
-                nwr[man_made=clock](around:${distance}, ${startCoords[0]}, ${startCoords[1]}); 
-                nwr[man_made=windmill](around:${distance}, ${startCoords[0]}, ${startCoords[1]}); 
-                nwr[man_made=lighthouse](around:${distance}, ${startCoords[0]}, ${startCoords[1]}); 
-                nwr[man_made=treehouse](around:${distance}, ${startCoords[0]}, ${startCoords[1]}); 
-                nwr[man_made=tower](around:${distance}, ${startCoords[0]}, ${startCoords[1]}); 
-                nwr[man_made=flagpole](around:${distance}, ${startCoords[0]}, ${startCoords[1]});
-
-                nwr[tunnel=yes](around:${distance}, ${startCoords[0]}, ${startCoords[1]}); 
+                nwr[leisure=park](around:${distance}, ${startCoords[0]}, ${startCoords[1]});               
             );
             out center;
         `;
@@ -78,7 +46,7 @@ function Challenge() {
         `;
         
         try {
-            let response = await fetch("https://overpass-api.de/api/interpreter?data=" + encodeURIComponent(query));
+            let response = await fetch("https://overpass-api.de/api/interpreter?data=" + encodeURIComponent(query.trim()));
             let data = await response.json();
 
             // If we can't find anything interesting, try a more generous query
