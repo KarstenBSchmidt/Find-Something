@@ -3,17 +3,20 @@ import { addDoc } from "firebase/firestore";
 
 // Store the current users generate challenge under their profile into firestore
 export const storeChallenge= async(longitude, latitude, distance) => {
-    // Don't add duplicate challenges
-    if (getChallenges().includes({longitude, latitude, distance})) {
-        console.log("Challenge already exists.");
-        return;
-    }
-
     try {
-        
-        const uid = auth.currentUser?.uid;
-        if (!uid) {
-            throw new Error("User not logged in.");
+        // Fetch existing challenges
+        const existingChallenges = await getChallenges();
+
+        // Check if challenge already exists
+        const challengeExists = existingChallenges.some(challenge => 
+            challenge.longitude === longitude && 
+            challenge.latitude === latitude && 
+            challenge.distance === distance
+        );
+
+        if (challengeExists) {
+            //console.log("Challenge already exists.");
+            return;
         }
 
         const challenges = collection(db, 'users', uid, 'challenges');
@@ -24,6 +27,7 @@ export const storeChallenge= async(longitude, latitude, distance) => {
             distance: distance,
             createdAt: new Date().toISOString(),
         });
+        //console.log("New challenge stored successfully.");
     } catch (error) {
         throw new Error(error.message);
     }
