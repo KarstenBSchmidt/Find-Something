@@ -1,7 +1,8 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getFirestore, collection, query, where, getDocs, setDoc, doc } from "firebase/firestore";
+import { getFirestore, collection, query, where, getDocs, setDoc, doc, orderBy } from "firebase/firestore";
 
+// use your own .env to fill in the values
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
@@ -17,4 +18,4 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-export { auth, db, collection, query, where, getDocs, setDoc, doc };
+export { auth, db, collection, query, where, getDocs, setDoc, doc, getAuth, orderBy };
