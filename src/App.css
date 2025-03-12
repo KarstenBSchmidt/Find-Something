@@ -12,7 +12,7 @@ header {
   align-items: center;
   justify-content: flex-start;
   justify-self: flex-start; 
-  gap: 1em;
+  /* gap: 1em; */
   min-width: 100%;
 }
 

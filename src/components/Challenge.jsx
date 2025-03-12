@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Routing from "./Routing";
 import "./Challenge.css";
 
@@ -184,10 +184,14 @@ function Challenge() {
         updateDestination(places[newIndex]); // Update destination with the new place
     };
 
+    // useEffect, set destination to null island
+    useEffect(() => {
+        setDestination({ lat: 0, lon: 0, name: "Null Island" });
+        places.push("Nothing");
+    }, []);
+
     return (
         <div className="challenge-container">
-            <h1>Find Something</h1>
-            <p>Find parks, forests, artwork, and more.</p>
             <div id="inputContainer">
                 <div id="sliderWithCaption">
                     <label htmlFor="distance-slider">{distance} meters</label>
@@ -202,14 +206,14 @@ function Challenge() {
                     />
                 </div>
                 
-                <button onClick={fetchNearestPlace}>Go!</button>
-                {places.length > 1 && <button onClick={handleReRoll}>Re-roll!</button>}
+                <button onClick={fetchNearestPlace}>Search</button>
+                {places.length > 1 && <button onClick={handleReRoll} >Next</button>}
             </div>
             
             {/* added this so the routing comopnent is only rendered once a place is found */}
             {places.length > 0 && (
             <div id="routingContainer">
-                {destination && <Routing inputEndLat={destination.lat} inputEndLon={destination.lon} destinationName={destination.name} />}
+                <Routing inputEndLat={destination.lat} inputEndLon={destination.lon} destinationName={destination.name} />
             </div>
             )}
         </div>

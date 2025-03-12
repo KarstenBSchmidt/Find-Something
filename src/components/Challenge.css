@@ -3,13 +3,14 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 20px;
+    padding: 10px;
     font-family: Arial, sans-serif;
 }
 
 h1 {
     font-size: 32px;
-    margin-bottom: -5px;
+    margin-bottom: 15px;
+    margin-top: -5px;
 }
 
 p {
@@ -22,7 +23,7 @@ label {
 }
 
 input[type="range"] {
-    width: 90%;
+    width:20vw;
     margin-bottom: 20px;
     margin-left: 5px;
     margin-right: 5px;
@@ -33,7 +34,7 @@ button {
     background-color: #007bff;
     color: white;
     border: none;
-    padding: 10px 20px;
+    padding: 10px;
     font-size: 16px;
     cursor: pointer;
     border-radius: 5px;
@@ -44,15 +45,17 @@ button:hover {
 }
 
 #map {
-    width: 100%;
+    width: 95vw;
     height: 100%;
     margin-top: 20px;
     border-radius: 5px;
 }
 
 #routingContainer {
-    width: 100%;
-    height: 400px;
+    display: flex;
+    width: 65vw;
+    height: 40vh;
+    margin-bottom: 20px;
 }
 
 #inputContainer {
