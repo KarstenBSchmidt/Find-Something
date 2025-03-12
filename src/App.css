@@ -33,7 +33,7 @@ button {
   color: white;
   background-color: gray;
   border: 1px solid black;
-  margin: 10px;
+  margin: 5px;
 }
 
 
@@ -63,7 +63,7 @@ label {
 }
 
 input {
-  width: 100%;
+  width: 80%;
   max-width: 300px;
   padding: 4px; /* Reduce padding inside input */
   font-size: 14px;
@@ -139,7 +139,7 @@ input {
   background: linear-gradient(45deg, #212222, #26352d);
   border: 2px solid #556057;
   border-style: ridge;
-  padding: 15px;
+  padding: 5px;
   border-radius: 10px;
   margin-bottom: 20px;
   margin-top: 0px; 
