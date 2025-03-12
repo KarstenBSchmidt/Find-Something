@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import Routing from "./Routing";
 import "./Challenge.css";
+import loadingIcon from "../assets/loadingIcon.gif";
 
 function Challenge() {
     const [distance, setDistance] = useState(1000); // Default to 1000m
     const [places, setPlaces] = useState([]); // Store all fetched places from the Overpass API
     const [currentIndex, setCurrentIndex] = useState(0); // Track the index of the currently selected place
     const [destination, setDestination] = useState(null);
+    const [isSearching, setIsSearching] = useState(false);
     let startCoords = null;
 
     const fetchNearestPlace = async () => {
@@ -46,14 +48,18 @@ function Challenge() {
         `;
         
         try {
+            setIsSearching(true);
             let response = await fetch("https://overpass-api.de/api/interpreter?data=" + encodeURIComponent(query.trim()));
             let data = await response.json();
+            setIsSearching(false);
 
             // If we can't find anything interesting, try a more generous query
             if (data.elements.length === 0) {
                 console.log("No results found, trying a more generous query...");
+                setIsSearching(true);
                 response = await fetch("https://overpass-api.de/api/interpreter?data=" + encodeURIComponent(generousQuery));
                 data = await response.json();
+                setIsSearching(false);
 
                 // If that still doesn't work, give up
                 if (data.elements.length === 0) {
@@ -162,7 +168,12 @@ function Challenge() {
         <div className="challenge-container">
             <div id="inputContainer">
                 <div id="sliderWithCaption">
-                    <label htmlFor="distance-slider">{distance} meters</label>
+                    <label htmlFor="distance-slider">
+                        <span>
+                            {distance} meters
+                            {isSearching && (<img src={loadingIcon} style={{width:12, height:12, marginRight: 20, marginBottom: 0, marginTop: 0}}></img>)}
+                        </span>
+                    </label>
                     <input 
                         type="range" 
                         id="distance-slider" 
