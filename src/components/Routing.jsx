@@ -4,7 +4,7 @@ import "leaflet/dist/leaflet.css";
 import "./Routing.css";
 import { storeChallenge } from "../firestore";
 
-const transportationMode = "foot";
+const transportationMode = "bike";
 // For now, this is just a string (and it's my own personal key so don't get any funny ideas!). 
 // TODO: If we have time, we should move this to a .env file.
 const graphHopperApiKey = "fd70d72c-e0ae-476c-8001-c769b2269239";
