@@ -90,15 +90,16 @@ function App() {
         </div>
       )}
     </div>
-
-    <div className="container-row">
-        <ToggleButton 
-            text="Previous Challenges" 
-            enabledImage={crownOn} 
-            disabledImage={crownOff} 
-            onClick={() => setViewPrevious(prev => !prev)}
-        />
-      </div>
+    {user && (
+      <div className="container-row">
+      <ToggleButton 
+          text="Previous Challenges" 
+          enabledImage={crownOn} 
+          disabledImage={crownOff} 
+          onClick={() => setViewPrevious(prev => !prev)}
+      />
+    </div>)}
+    
     
     <div className="logout">
       {user && (
