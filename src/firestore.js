@@ -4,6 +4,10 @@ import { addDoc } from "firebase/firestore";
 // Store the current users generate challenge under their profile into firestore
 export const storeChallenge= async(longitude, latitude, distance) => {
     try {
+        const uid = auth.currentUser?.uid;
+        if (!uid) {
+            throw new Error("User not logged in.");
+        }
         // Fetch existing challenges
         const existingChallenges = await getChallenges();
 
