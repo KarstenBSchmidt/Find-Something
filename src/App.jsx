@@ -63,7 +63,7 @@ function App() {
     
 
 
-    <div classname="main-container">
+    <div className="main-container">
     
     </div>
     
