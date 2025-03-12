@@ -4,9 +4,15 @@ import { AuthenticationComponent } from "../components/authentication"
 import { LogoutComponent } from "../components/logout"
 import Challenge from './components/Challenge'
 import Routing from './components/Routing'
+import ToggleButton from './components/ToggleButton'
 import CompareImage from './components/CompareImage'
 import { auth } from './firebase'
 import { onAuthStateChanged } from 'firebase/auth'
+
+import cameraOn from './assets/cameraOn.png'
+import cameraOff from './assets/cameraOff.png'
+import bikeOn from './assets/bikeOn.png'
+import bikeOff from './assets/bikeOff.png'
 
 
 function App() {
@@ -32,13 +38,19 @@ function App() {
       <h1 className="page-title">Find Something</h1>
       {user && (      
       <div className="container-row">
-        <button onClick={() => setViewChallenge(!viewChallenge)}>
-          {viewChallenge ? "Hide" : "View"} Challenges
-        </button>
+        <ToggleButton 
+            text="Challenges" 
+            enabledImage={bikeOn} 
+            disabledImage={bikeOff} 
+            onClick={() => setViewChallenge(prev => !prev)} 
+        />
 
-        <button onClick={() => setViewImageCompare(!viewImageCompare)}>
-          {viewImageCompare ? "Hide" : "View"} Image Compare  
-        </button>
+        <ToggleButton 
+            text="Camera" 
+            enabledImage={cameraOn} 
+            disabledImage={cameraOff} 
+            onClick={() => setViewImageCompare(prev => !prev)} 
+        />
       </div>   
     )}
     </header>
