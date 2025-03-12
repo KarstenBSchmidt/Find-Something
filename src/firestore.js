@@ -1,7 +1,14 @@
-import { auth, db, addDoc, collection, getDocs, query, orderBy} from './firebase';
+import { auth, db, collection, getDocs, query, orderBy} from './firebase';
+import { addDoc } from "firebase/firestore";
 
 // Store the current users generate challenge under their profile into firestore
 export const storeChallenge= async(longitude, latitude, distance) => {
+    // Don't add duplicate challenges
+    if (getChallenges().includes({longitude, latitude, distance})) {
+        console.log("Challenge already exists.");
+        return;
+    }
+
     try {
         
         const uid = auth.currentUser?.uid;

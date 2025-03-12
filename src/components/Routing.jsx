@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "./Routing.css";
+import { storeChallenge } from "../firestore";
 
 const transportationMode = "foot";
 // For now, this is just a string (and it's my own personal key so don't get any funny ideas!). 
@@ -80,6 +81,9 @@ function Routing({ inputEndLat, inputEndLon, destinationName }) {
                 // Add a popup to the marker
                 const distance = (routeData.paths[0].distance / 1000).toFixed(2);
                 dstMarker.current.bindPopup(destinationName + "\n" + distance + "km.").openPopup();
+
+                // Add challenge to firestore
+                storeChallenge(inputEndLon, inputEndLat, distance);
             })
             .catch(error => console.error("Error fetching route:", error));
     }, [startCoords, inputEndLat, inputEndLon]);
