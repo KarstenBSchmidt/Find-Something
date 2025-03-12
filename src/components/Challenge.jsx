@@ -42,7 +42,7 @@ function Challenge() {
 
                 nwr[natural=cave_entrance](around:${distance}, ${startCoords[0]}, ${startCoords[1]}); 
                 nwr[natural=cliff](around:${distance}, ${startCoords[0]}, ${startCoords[1]}); 
-                nwr[natural=volcano](around:${distance}, ${startCoords[0]}, ${startCoords[1]}); 
+                nwr[natural=volcano][volcano:status=dormant](around:${distance}, ${startCoords[0]}, ${startCoords[1]}); 
                 nwr[natural=spring](around:${distance}, ${startCoords[0]}, ${startCoords[1]}); 
                 nwr[natural=beach](around:${distance}, ${startCoords[0]}, ${startCoords[1]}); 
                 nwr[natural=geyser](around:${distance}, ${startCoords[0]}, ${startCoords[1]}); 
