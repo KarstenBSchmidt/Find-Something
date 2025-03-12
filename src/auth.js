@@ -58,7 +58,7 @@ export const Logout = async () => {
       }
 };
 
-// check fo a unique username
+// check for a unique username
 const checkUsername = async (username) => {
     const usersRef = collection(db, "users");
     const search = query(usersRef, where("lowercasedUsername", "==", username.toLowerCase()));
