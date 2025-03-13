@@ -23,6 +23,7 @@ function App() {
   const [viewChallenge, setViewChallenge] = useState(false); // Track the viewChallenge state
   const [viewImageCompare, setViewImageCompare] = useState(false); // Track the viewImageCompare state
   const [viewPrevious, setViewPrevious] = useState(false); // Track the viewPrevious state
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if(user){
@@ -44,7 +45,7 @@ function App() {
         <AuthenticationComponent />
       )}
       
-      {user && (      
+   {user && (
       <div className="button-container">
         <ToggleButton 
             text="Challenges" 
@@ -79,9 +80,9 @@ function App() {
             setViewImageCompare(false)
           }}
         /> 
-    </div>   
+    </div>
+    )}   
 
-    )}
     </header>
   
 
@@ -95,9 +96,9 @@ function App() {
      
       
       {viewImageCompare && user && (
-        <div className="section">
+
           <CompareImage />
-        </div>
+
       )}  
 
       {viewPrevious && user && (

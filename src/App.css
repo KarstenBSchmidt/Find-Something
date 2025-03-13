@@ -19,8 +19,8 @@ header {
 
 body {
   font-family: 'Roboto', sans-serif;
-
-  margin: 0;
+  margin-top: 30px; 
+  margin-bottom: 30px;
   padding: 0;
   min-height: 100vh;
   min-width: 100vw;
@@ -108,10 +108,12 @@ input {
 .main-container {
   display: flex;
   flex-direction: column; /* Default to column layout */
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   height: 100vh;
   padding: 10px;
+  padding-left: 0px;
+  padding-right: 0px;
 }
 
 .container-column {
@@ -136,14 +138,28 @@ input {
 }
 
 .button-container {
-  display: flex;
-  flex-wrap: wrap; /* Allows grid formation on mobile */
-  flex-direction: row; 
-  justify-content: center;
-  gap: 10px;
-  width: 100%;
+  display: flex;          /* Ensures buttons are in a row */
+  justify-content: center; /* Centers buttons in the container */
+  flex-wrap: wrap;        /* Allows buttons to wrap to the next line */
+  gap: 10px; 
+  margin: 10px;              /* Adds spacing between buttons */
+  width: 100%;            /* Ensures it takes full width */
+}
+
+.button-container button {
+  flex: 1;               /* Makes all buttons the same width */
+  max-width: 200px;
   padding: 10px;
-  max-width: 95vw; 
+  text-align: center;
+  border: 1px solid #ccc;
+  background-color: #007BFF;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.button-container button:hover {
+  background-color: #0056b3;
 }
 
 .section {
