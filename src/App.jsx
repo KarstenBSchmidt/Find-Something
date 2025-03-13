@@ -36,45 +36,61 @@ function App() {
 
   return (
     <>
-
+    <div className="main-container">
     <header>
       <h1 className="page-title">Find Something</h1>
+
+      {!user && (
+        <AuthenticationComponent />
+      )}
+      
       {user && (      
-      <div className="container-row">
+      <div className="button-container">
         <ToggleButton 
             text="Challenges" 
             enabledImage={bikeOn} 
             disabledImage={bikeOff} 
-            onClick={() => setViewChallenge(prev => !prev)} 
+            onClick={() => {
+              setViewChallenge(prev => !prev)
+              setViewImageCompare(false)
+              setViewPrevious(false)
+            }} 
         />
 
         <ToggleButton 
             text="Camera" 
             enabledImage={cameraOn} 
             disabledImage={cameraOff} 
-            onClick={() => setViewImageCompare(prev => !prev)} 
+            onClick={() => {
+              setViewImageCompare(prev => !prev)
+              setViewChallenge(false)
+              setViewPrevious(false)
+            }}
         />
-      </div>   
+    
+      
+        <ToggleButton 
+          text="Previous Challenges" 
+          enabledImage={crownOn} 
+          disabledImage={crownOff} 
+          onClick={() => {
+            setViewPrevious(prev => !prev)
+            setViewChallenge(false)
+            setViewImageCompare(false)
+          }}
+        /> 
+    </div>   
+
     )}
     </header>
-    
-    
-
-    {!user && (
-      <AuthenticationComponent />
-    )}
-    
-
+  
 
     <div className="main-container">
-    
-    </div>
-    
-    <div className="container-row">
+
       {viewChallenge && user && (
-        <div className="section">
+
           <Challenge />
-        </div>
+
       )}
      
       
@@ -90,21 +106,13 @@ function App() {
         </div>
       )}
     </div>
-    {user && (
-      <div className="container-row">
-      <ToggleButton 
-          text="Previous Challenges" 
-          enabledImage={crownOn} 
-          disabledImage={crownOff} 
-          onClick={() => setViewPrevious(prev => !prev)}
-      />
-    </div>)}
-    
-    
+       
     <div className="logout">
       {user && (
         <LogoutComponent />
       )}  
+    </div>
+
     </div>
 
 

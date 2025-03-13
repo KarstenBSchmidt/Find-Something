@@ -142,13 +142,14 @@ const CompareImage = () => {
         </>
         
       )}
-      <div className="container-row">
+      <div className="container-column">
+      <div className="button-container">
         <button onClick={generateTarget}>New Target</button>
         <button onClick={analyzeImage} disabled={!model || !image}>
           Analyze
         </button>
       </div>
-      <div className="container-column">
+      
       {image && (
         <img
           src={image}

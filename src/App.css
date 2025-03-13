@@ -7,6 +7,7 @@
 }
 
 header {
+  padding-top: 20px; 
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -18,10 +19,11 @@ header {
 
 body {
   font-family: 'Roboto', sans-serif;
-  background: linear-gradient(300deg, #252525, #313131);
+
   margin: 0;
   padding: 0;
   min-height: 100vh;
+  min-width: 100vw;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -105,21 +107,18 @@ input {
 
 .main-container {
   display: flex;
-  flex-direction: column;
-  gap: 1em;
-  align-items: flex-start;
-  justify-content: flex-start;
-  flex-wrap: wrap; 
-  justify-self: start;
-  max-width: 95vw;
-  margin: 0 auto; 
+  flex-direction: column; /* Default to column layout */
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 10px;
 }
 
 .container-column {
   display: flex;
   flex-direction: column;
   gap: 10px; 
-  align-items: flex-start;
+  align-items: center;
   justify-content: center; 
   flex-wrap: wrap;
 }
@@ -130,24 +129,37 @@ input {
   flex-wrap:wrap;
   gap: 10px; 
   align-items: stretch;
-  width: max-content; 
+  width: max-content;
+  min-width: 95vw;
   justify-content:flex-start;
   margin: 10px;
 }
 
+.button-container {
+  display: flex;
+  flex-wrap: wrap; /* Allows grid formation on mobile */
+  flex-direction: row; 
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px;
+  max-width: 95vw; 
+}
+
 .section {
+  display: flex;
+  flex-direction: column;
   background: linear-gradient(45deg, #212222, #26352d);
   border: 2px solid #556057;
-  border-style: ridge;
-  padding: 5px;
+  padding: 10px;
   border-radius: 10px;
-  margin-bottom: 20px;
-  margin-top: 0px; 
+  margin: 10px; 
   align-items: center; 
   justify-content: center;
-  justify-self: flex-start;
+  justify-self: center;
   flex-wrap: wrap; 
-  width: max-content;
+  width: 95%;
+  height: 95%;
   box-shadow:#2b2b2b 2px 2px 2px;
 }
 
