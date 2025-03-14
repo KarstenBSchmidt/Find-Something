@@ -1,11 +1,15 @@
+// This component prompts the user to draw a random object using their walking path
+// The user can generate a new random object to draw or start navigation to draw the object
+// The Routing component is rendered when the user starts navigation
+// There is currently no way to check the user's drawing against the object they were supposed to draw
+// - That can be a future improvement
+
 import React, { useState } from "react";
 import Routing from "./Routing"; // Import Routing component
 
 
 // List of random shapes or objects to draw
 const drawingPrompts = [
-  "heart",
-  "smiley face",
   "star",
   "tree",
   "house",
@@ -14,7 +18,14 @@ const drawingPrompts = [
   "dinosaur",
   "rocket",
   "duck", 
-  "spiral"
+  "spiral", 
+  "torque wrench",
+  "tazmanian devil",
+  "penguin",
+  "squirrel",
+  "burrito",
+  "ice cream cone",
+  "hot dog"
 ];
 
 const DrawingChallenge = () => {
