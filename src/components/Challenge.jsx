@@ -21,18 +21,20 @@ function Challenge() {
             );
         });
 
+        const searchDistance = distance * 0.75;
+
         // We can add whatever we want to this query. 
         // Use the OpenStreetMap Wiki to see what's there: https://wiki.openstreetmap.org/.
         const query = `
             [out:json];
             (
-                nwr[artwork_type](around:${distance}, ${startCoords[0]}, ${startCoords[1]});
-                nwr[tourism=artwork](around:${distance}, ${startCoords[0]}, ${startCoords[1]}); 
-                nwr[waterway=waterfall](around:${distance}, ${startCoords[0]}, ${startCoords[1]});
-                nwr[amenity=fountain](around:${distance}, ${startCoords[0]}, ${startCoords[1]});
-                nwr[bridge=boardwalk](around:${distance}, ${startCoords[0]}, ${startCoords[1]});
-                nwr[tourism=viewpoint](around:${distance}, ${startCoords[0]}, ${startCoords[1]}); 
-                nwr[leisure=park](around:${distance}, ${startCoords[0]}, ${startCoords[1]});               
+                nwr[artwork_type](around:${searchDistance}, ${startCoords[0]}, ${startCoords[1]});
+                nwr[tourism=artwork](around:${searchDistance}, ${startCoords[0]}, ${startCoords[1]}); 
+                nwr[waterway=waterfall](around:${searchDistance}, ${startCoords[0]}, ${startCoords[1]});
+                nwr[amenity=fountain](around:${searchDistance}, ${startCoords[0]}, ${startCoords[1]});
+                nwr[bridge=boardwalk](around:${searchDistance}, ${startCoords[0]}, ${startCoords[1]});
+                nwr[tourism=viewpoint](around:${searchDistance}, ${startCoords[0]}, ${startCoords[1]}); 
+                nwr[leisure=park](around:${searchDistance}, ${startCoords[0]}, ${startCoords[1]});               
             );
             out center;
         `;
@@ -42,7 +44,7 @@ function Challenge() {
         const generousQuery = `
             [out:json];
             (
-                nwr(around:${distance}, ${startCoords[0]}, ${startCoords[1]});
+                nwr(around:${searchDistance}, ${startCoords[0]}, ${startCoords[1]});
             );
             out center;
         `;
