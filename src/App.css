@@ -7,6 +7,7 @@
 }
 
 header {
+  padding-top: 20px; 
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -18,10 +19,11 @@ header {
 
 body {
   font-family: 'Roboto', sans-serif;
-  background: linear-gradient(300deg, #252525, #313131);
-  margin: 0;
+  margin-top: 30px; 
+  margin-bottom: 30px;
   padding: 0;
   min-height: 100vh;
+  min-width: 100vw;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -105,21 +107,20 @@ input {
 
 .main-container {
   display: flex;
-  flex-direction: column;
-  gap: 1em;
-  align-items: flex-start;
+  flex-direction: column; /* Default to column layout */
   justify-content: flex-start;
-  flex-wrap: wrap; 
-  justify-self: start;
-  max-width: 95vw;
-  margin: 0 auto; 
+  align-items: center;
+  height: 100vh;
+  padding: 10px;
+  padding-left: 0px;
+  padding-right: 0px;
 }
 
 .container-column {
   display: flex;
   flex-direction: column;
   gap: 10px; 
-  align-items: flex-start;
+  align-items: center;
   justify-content: center; 
   flex-wrap: wrap;
 }
@@ -130,24 +131,62 @@ input {
   flex-wrap:wrap;
   gap: 10px; 
   align-items: stretch;
+<<<<<<< HEAD
   width: max-content; 
+  justify-content:flex-start;
+  margin: 10px;
+=======
+  width: max-content;
+  min-width: 95vw;
   justify-content:flex-start;
   margin: 10px;
 }
 
+.button-container {
+  display: flex;          /* Ensures buttons are in a row */
+  justify-content: center; /* Centers buttons in the container */
+  flex-wrap: wrap;        /* Allows buttons to wrap to the next line */
+  gap: 10px; 
+  margin: 10px;              /* Adds spacing between buttons */
+  width: 100%;            /* Ensures it takes full width */
+}
+
+.button-container button {
+  flex: 1;               /* Makes all buttons the same width */
+  max-width: 200px;
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ccc;
+  background-color: #007BFF;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.button-container button:hover {
+  background-color: #0056b3;
+>>>>>>> Cole
+}
+
 .section {
+  display: flex;
+  flex-direction: column;
   background: linear-gradient(45deg, #212222, #26352d);
   border: 2px solid #556057;
+<<<<<<< HEAD
   border-style: ridge;
   padding: 5px;
+=======
+  padding: 10px;
+>>>>>>> Cole
   border-radius: 10px;
-  margin-bottom: 20px;
-  margin-top: 0px; 
+  margin: 10px; 
   align-items: center; 
   justify-content: center;
-  justify-self: flex-start;
+  justify-self: center;
   flex-wrap: wrap; 
-  width: max-content;
+  width: 95%;
+  height: 95%;
   box-shadow:#2b2b2b 2px 2px 2px;
 }
 

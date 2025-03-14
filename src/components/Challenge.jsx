@@ -28,6 +28,7 @@ function Challenge() {
         const query = `
             [out:json];
             (
+<<<<<<< HEAD
                 nwr[artwork_type](around:${searchDistance}, ${startCoords[0]}, ${startCoords[1]});
                 nwr[tourism=artwork](around:${searchDistance}, ${startCoords[0]}, ${startCoords[1]}); 
                 nwr[waterway=waterfall](around:${searchDistance}, ${startCoords[0]}, ${startCoords[1]});
@@ -35,6 +36,15 @@ function Challenge() {
                 nwr[bridge=boardwalk](around:${searchDistance}, ${startCoords[0]}, ${startCoords[1]});
                 nwr[tourism=viewpoint](around:${searchDistance}, ${startCoords[0]}, ${startCoords[1]}); 
                 nwr[leisure=park](around:${searchDistance}, ${startCoords[0]}, ${startCoords[1]});               
+=======
+                nwr[artwork_type](around:${distance}, ${startCoords[0]}, ${startCoords[1]});
+                nwr[tourism=artwork](around:${distance}, ${startCoords[0]}, ${startCoords[1]}); 
+                nwr[waterway=waterfall](around:${distance}, ${startCoords[0]}, ${startCoords[1]});
+                nwr[amenity=fountain](around:${distance}, ${startCoords[0]}, ${startCoords[1]});
+                nwr[bridge=boardwalk](around:${distance}, ${startCoords[0]}, ${startCoords[1]});
+                nwr[tourism=viewpoint](around:${distance}, ${startCoords[0]}, ${startCoords[1]}); 
+                nwr[leisure=park](around:${distance}, ${startCoords[0]}, ${startCoords[1]});               
+>>>>>>> Cole
             );
             out center;
         `;
@@ -172,8 +182,13 @@ function Challenge() {
                 <div id="sliderWithCaption">
                     <label htmlFor="distance-slider">
                         <span>
+<<<<<<< HEAD
                             {distance}m
                             {isSearching && (<img src={loadingIcon} style={{width:12, height:12, marginRight: 0, marginBottom: 0, marginTop: 0}}></img>)}
+=======
+                            {distance} meters
+                            {isSearching && (<img src={loadingIcon} style={{width:12, height:12, marginRight: 20, marginBottom: 0, marginTop: 0}}></img>)}
+>>>>>>> Cole
                         </span>
                     </label>
                     <input 

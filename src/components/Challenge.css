@@ -24,6 +24,10 @@ label {
 
 input[type="range"] {
     width:20vw;
+<<<<<<< HEAD
+=======
+    margin-bottom: 20px;
+>>>>>>> Cole
     margin-left: 5px;
     margin-right: 5px;
     box-shadow: none;
