@@ -9,6 +9,7 @@ import CompareImage from './components/CompareImage'
 import { auth } from './firebase'
 import { onAuthStateChanged } from 'firebase/auth'
 import ListChallenges from './components/ListChallenges'
+import DrawingChallenge from './components/DrawingChallenge'; 
 
 import cameraOn from './assets/cameraOn.png'
 import cameraOff from './assets/cameraOff.png'
@@ -16,6 +17,8 @@ import bikeOn from './assets/bikeOn.png'
 import bikeOff from './assets/bikeOff.png'
 import crownOn from './assets/crownOn.png'
 import crownOff from './assets/crownOff.png'
+import drawingOn from './assets/drawingOn.png'; 
+import drawingOff from './assets/drawingOff.png';
 
 
 function App() {
@@ -23,6 +26,7 @@ function App() {
   const [viewChallenge, setViewChallenge] = useState(false); // Track the viewChallenge state
   const [viewImageCompare, setViewImageCompare] = useState(false); // Track the viewImageCompare state
   const [viewPrevious, setViewPrevious] = useState(false); // Track the viewPrevious state
+  const [viewDrawing, setViewDrawing] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -55,6 +59,7 @@ function App() {
               setViewChallenge(prev => !prev)
               setViewImageCompare(false)
               setViewPrevious(false)
+              setViewDrawing(false)
             }} 
         />
 
@@ -66,6 +71,19 @@ function App() {
               setViewImageCompare(prev => !prev)
               setViewChallenge(false)
               setViewPrevious(false)
+              setViewDrawing(false)
+            }}
+        />
+
+        <ToggleButton
+            text="Drawing Challenge"
+            enabledImage={drawingOn}
+            disabledImage={drawingOff}
+            onClick={() => {
+              setViewDrawing(prev => !prev);
+              setViewChallenge(false);
+              setViewImageCompare(false);
+              setViewPrevious(false);
             }}
         />
     
@@ -78,6 +96,7 @@ function App() {
             setViewPrevious(prev => !prev)
             setViewChallenge(false)
             setViewImageCompare(false)
+            setViewDrawing(false)
           }}
         /> 
     </div>
@@ -99,7 +118,11 @@ function App() {
 
           <CompareImage />
 
-      )}  
+      )} 
+
+      {viewDrawing && user && (
+        <DrawingChallenge />
+      )} 
 
       {viewPrevious && user && (
         <div className="section">
