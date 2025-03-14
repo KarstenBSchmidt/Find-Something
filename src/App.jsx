@@ -15,6 +15,8 @@ import bikeOn from './assets/bikeOn.png'
 import bikeOff from './assets/bikeOff.png'
 import crownOn from './assets/crownOn.png'
 import crownOff from './assets/crownOff.png'
+import drawingOn from './assets/drawingOn.png'
+import drawingOff from './assets/drawingOff.png'
 
 
 function App() {
@@ -33,9 +35,12 @@ function App() {
 
     return (
         <>
+          
             <header>
                 <h1 className="page-title">Find Something</h1>
             </header>
+
+            <div className="main-container">
 
             {user && (
                 <div className="container-row">
@@ -75,7 +80,7 @@ function App() {
 
             {!user && <AuthenticationComponent />}
 
-            <div className="main-container"></div>
+         
 
             <div className="container-row">
                 {activeToggle === 'challenges' && user && (
@@ -90,6 +95,12 @@ function App() {
                     </div>
                 )}
 
+                {activeToggle === 'drawing' && user && (
+                    <div className="section">
+                        <DrawingChallenge />
+                    </div>
+                )}
+
                 {activeToggle === 'records' && user && (
                     <div className="section">
                         <ListChallenges />
@@ -100,6 +111,7 @@ function App() {
             <div className="logout">
                 {user && <LogoutComponent />}
             </div>
+        </div>
         </>
     )
 }

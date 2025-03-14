@@ -182,13 +182,8 @@ function Challenge() {
                 <div id="sliderWithCaption">
                     <label htmlFor="distance-slider">
                         <span>
-<<<<<<< HEAD
                             {distance}m
                             {isSearching && (<img src={loadingIcon} style={{width:12, height:12, marginRight: 0, marginBottom: 0, marginTop: 0}}></img>)}
-=======
-                            {distance} meters
-                            {isSearching && (<img src={loadingIcon} style={{width:12, height:12, marginRight: 20, marginBottom: 0, marginTop: 0}}></img>)}
->>>>>>> Cole
                         </span>
                     </label>
                     <input 
