@@ -40,8 +40,8 @@ const DrawingChallenge = () => {
   };
 
   return (
-    <div className="drawing-container">
-      <h2>GPS Drawing Challenge</h2>
+    <div className="drawing-container" style={{ maxWidth: "75vw"}}>
+      <h2>Drawing Challenge</h2>
 
       {/* Show the challenge or generate a new one */}
       {challenge ? (

@@ -12,7 +12,7 @@ export default function ListChallenges() {
 
   const mapRef = useRef(null);
   const startMarker = useRef(null);
-  const [startCoords, setStartCoords] = useState([47.6062, -122.3321]); // Default: Seattle, WA
+  const [startCoords, setStartCoords] = useState(null); // Default: Seattle, WA
 
   // Initialize startCoords once via geolocation
   useEffect(() => {
@@ -29,6 +29,8 @@ export default function ListChallenges() {
   }, []);
 
   useEffect(() => {
+    if (startCoords === null) return;
+
     // setup the map
     if (!mapRef.current) {
       mapRef.current = L.map('challengeMap').setView(startCoords, 10);
@@ -49,7 +51,7 @@ export default function ListChallenges() {
     challenges.forEach((challenge) => {
       L.marker([challenge.latitude, challenge.longitude])
         .addTo(mapRef.current)
-        .bindPopup(`<p>Distance: ${challenge.distance}</p><p>Created At: ${challenge.createdAt}</p>`);
+        .bindPopup(`<p className="popup">Distance: ${challenge.distance}</p><p className="popup">Created At: ${challenge.createdAt}</p>`);
     });
 
   }, [challenges, startCoords]);

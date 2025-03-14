@@ -149,7 +149,7 @@ const CompareImage = () => {
   }, [imageURL]);
 
   return (
-    <div>
+    <div style={{ maxWidth: "75vw"}}>
       {target && (
         <>
           <h2>Find a</h2>
@@ -171,7 +171,7 @@ const CompareImage = () => {
 
       {imageURL && (
           <div>
-            <img src={imageURL} alt="Captured" />
+            <img src={imageURL} alt="Captured" id="userImage"/>
           </div>
       )}
 

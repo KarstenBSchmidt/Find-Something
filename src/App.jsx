@@ -61,7 +61,7 @@ function App() {
                     />
 
                     <ToggleButton
-                          text="Drawing Challenge"
+                          text="Drawing"
                           enabledImage={drawingOn}
                           disabledImage={drawingOff}
                           isOn={activeToggle === 'drawing'}
