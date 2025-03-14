@@ -12,7 +12,7 @@ export default function ListChallenges() {
 
   const mapRef = useRef(null);
   const startMarker = useRef(null);
-  const [startCoords, setStartCoords] = useState(null); // Default: Seattle, WA
+  const [startCoords, setStartCoords] = useState(null);
 
   // Initialize startCoords once via geolocation
   useEffect(() => {
