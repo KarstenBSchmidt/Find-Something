@@ -1,0 +1,9 @@
+#challengeMap {
+    display: flex;
+    height: 400px;
+    width: 65vw;
+    margin: 10px;
+    flex-grow: 1;
+    border-radius: 5px;
+    margin-top: 20px;
+}

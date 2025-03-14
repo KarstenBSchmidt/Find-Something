@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { getChallenges } from '../firestore';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import './ListChallenges.css';
 
 export default function ListChallenges() {
   const [challenges, setChallenges] = useState([]);
@@ -30,7 +31,7 @@ export default function ListChallenges() {
   useEffect(() => {
     // setup the map
     if (!mapRef.current) {
-      mapRef.current = L.map('map').setView(startCoords, 10);
+      mapRef.current = L.map('challengeMap').setView(startCoords, 10);
 
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 18,
@@ -55,8 +56,8 @@ export default function ListChallenges() {
 
   return (
     <>
-      <h1>Previous Challenges</h1>
-      <div id="map" style={{ height: '400px', width: '100%', marginTop: '10px' }}></div>
+        <h2>Your Records</h2>
+        <div id="challengeMap"></div>
     </>
   );
 }

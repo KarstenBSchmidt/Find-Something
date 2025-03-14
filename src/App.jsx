@@ -3,7 +3,6 @@ import './App.css'
 import { AuthenticationComponent } from "../components/authentication"
 import { LogoutComponent } from "../components/logout"
 import Challenge from './components/Challenge'
-import Routing from './components/Routing'
 import ToggleButton from './components/ToggleButton'
 import CompareImage from './components/CompareImage'
 import { auth } from './firebase'
@@ -19,99 +18,82 @@ import crownOff from './assets/crownOff.png'
 
 
 function App() {
-  const [user, setUser] = useState(null); // Track the user's state
-  const [viewChallenge, setViewChallenge] = useState(false); // Track the viewChallenge state
-  const [viewImageCompare, setViewImageCompare] = useState(false); // Track the viewImageCompare state
-  const [viewPrevious, setViewPrevious] = useState(false); // Track the viewPrevious state
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if(user){
-        setUser(user);
-      } else {
-        setUser(null);
-      }
-    });
-    return () => unsubscribe();
-  }, []);
+    const [user, setUser] = useState(null); // Track the user's state
+    const [activeToggle, setActiveToggle] = useState('challenges');
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setUser(user);
+            } else {
+                setUser(null);
+            }
+        });
+        return () => unsubscribe();
+    }, []);
 
-  return (
-    <>
+    return (
+        <>
+            <header>
+                <h1 className="page-title">Find Something</h1>
+            </header>
 
-    <header>
-      <h1 className="page-title">Find Something</h1>
-      {user && (      
-      <div className="container-row">
-        <ToggleButton 
-            text="Challenges" 
-            enabledImage={bikeOn} 
-            disabledImage={bikeOff} 
-            onClick={() => setViewChallenge(prev => !prev)} 
-        />
+            {user && (
+                <div className="container-row">
+                    <ToggleButton
+                        text="Challenges"
+                        enabledImage={bikeOn}
+                        disabledImage={bikeOff}
+                        isOn={activeToggle === 'challenges'}
+                        onClick={() => setActiveToggle('challenges')}
+                    />
 
-        <ToggleButton 
-            text="Camera" 
-            enabledImage={cameraOn} 
-            disabledImage={cameraOff} 
-            onClick={() => setViewImageCompare(prev => !prev)} 
-        />
-      </div>   
-    )}
-    </header>
-    
-    
+                    <ToggleButton
+                        text="Camera"
+                        enabledImage={cameraOn}
+                        disabledImage={cameraOff}
+                        isOn={activeToggle === 'camera'}
+                        onClick={() => setActiveToggle('camera')}
+                    />
 
-    {!user && (
-      <AuthenticationComponent />
-    )}
-    
+                    <ToggleButton
+                        text="Records"
+                        enabledImage={crownOn}
+                        disabledImage={crownOff}
+                        isOn={activeToggle === 'records'}
+                        onClick={() => setActiveToggle('records')}
+                    />
+                </div>
+            )}
 
+            {!user && <AuthenticationComponent />}
 
-    <div className="main-container">
-    
-    </div>
-    
-    <div className="container-row">
-      {viewChallenge && user && (
-        <div className="section">
-          <Challenge />
-        </div>
-      )}
-     
-      
-      {viewImageCompare && user && (
-        <div className="section">
-          <CompareImage />
-        </div>
-      )}  
+            <div className="main-container"></div>
 
-      {viewPrevious && user && (
-        <div className="section">
-          <ListChallenges />
-        </div>
-      )}
-    </div>
-    {user && (
-      <div className="container-row">
-      <ToggleButton 
-          text="Previous Challenges" 
-          enabledImage={crownOn} 
-          disabledImage={crownOff} 
-          onClick={() => setViewPrevious(prev => !prev)}
-      />
-    </div>)}
-    
-    
-    <div className="logout">
-      {user && (
-        <LogoutComponent />
-      )}  
-    </div>
+            <div className="container-row">
+                {activeToggle === 'challenges' && user && (
+                    <div className="section">
+                        <Challenge />
+                    </div>
+                )}
 
+                {activeToggle === 'camera' && user && (
+                    <div className="section">
+                        <CompareImage />
+                    </div>
+                )}
 
+                {activeToggle === 'records' && user && (
+                    <div className="section">
+                        <ListChallenges />
+                    </div>
+                )}
+            </div>
 
-     
-</>
-  )
+            <div className="logout">
+                {user && <LogoutComponent />}
+            </div>
+        </>
+    )
 }
 
 export default App
