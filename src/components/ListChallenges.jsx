@@ -1,34 +1,62 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect, useRef } from 'react';
 import { getChallenges } from '../firestore';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 
 export default function ListChallenges() {
-
   const [challenges, setChallenges] = useState([]);
+  // eslint-disable-next-line no-unused-vars
   const [error, setError] = useState(null);
+  // above used to print
+
+  const mapRef = useRef(null);
+  const startMarker = useRef(null);
+  const [startCoords, setStartCoords] = useState([47.6062, -122.3321]); // Default: Seattle, WA
+
+  // Initialize startCoords once via geolocation
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+        (position) => setStartCoords([position.coords.latitude, position.coords.longitude]),
+        () => setStartCoords([47.759439, -122.191486])
+    );
+}, []);
 
   useEffect(() => {
     getChallenges()
-      .then(data => setChallenges(data))
-      .catch(err => setError(err));
+      .then((data) => setChallenges(data))
+      .catch((err) => setError(err));
   }, []);
+
+  useEffect(() => {
+    // setup the map
+    if (!mapRef.current) {
+      mapRef.current = L.map('map').setView(startCoords, 10);
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+        attribution: '&copy; OpenStreetMap contributors',
+      }).addTo(mapRef.current);
+
+      // Add start marker
+      startMarker.current = L.marker(startCoords)
+        .addTo(mapRef.current)
+        .bindPopup('Your location')
+        .openPopup();
+    }
+
+    // Add challenge markers
+    challenges.forEach((challenge) => {
+      L.marker([challenge.latitude, challenge.longitude])
+        .addTo(mapRef.current)
+        .bindPopup(`<p>Distance: ${challenge.distance}</p><p>Created At: ${challenge.createdAt}</p>`);
+    });
+
+  }, [challenges, startCoords]);
 
   return (
     <>
       <h1>Previous Challenges</h1>
-      {error ? (
-        <p>Error loading challenges: {error.message}</p>
-      ) : (
-        <ul>
-          {challenges.map((challenge, index) => (
-            <li key={index}>
-              <p>Longitude: {challenge.longitude}</p>
-              <p>Latitude: {challenge.latitude}</p>
-              <p>Distance: {challenge.distance}</p>
-              <p>Created At: {challenge.createdAt}</p>
-            </li>
-          ))}
-        </ul>
-      )}
+      <div id="map" style={{ height: '400px', width: '100%', marginTop: '10px' }}></div>
     </>
   );
 }
