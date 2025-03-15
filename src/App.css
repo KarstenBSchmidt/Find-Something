@@ -1,7 +1,7 @@
 #root {
   max-width: 95vw;
   margin: 0 auto;
-  padding: 2rem;
+  padding-top: 2rem;
   text-align: center;
 
 }
@@ -76,8 +76,8 @@ input {
 }
 
 .register-button {
-  background-color: #03ffab;
-  color: #000;
+  background-color: #007bff;
+  color: white;
   border: 1px solid #000;
   border-radius: 4px;
   padding: 10px;
@@ -107,12 +107,16 @@ input {
   display: flex;
   flex-direction: column;
   gap: 1em;
-  align-items: flex-start;
+  align-items: center;
   justify-content: flex-start;
   flex-wrap: wrap; 
   justify-self: start;
   max-width: 95vw;
   margin: 0 auto; 
+}
+
+.main-container > * {
+  max-width: fit-content;
 }
 
 .container-column {
@@ -128,7 +132,7 @@ input {
   display: flex;
   flex-direction: row;
   flex-wrap:wrap;
-  gap: 10px; 
+  gap: 5px; 
   align-items: stretch;
   width: max-content; 
   justify-content:flex-start;
@@ -184,6 +188,11 @@ li {
 img {
   border-radius: 6px;
   max-width: 300px; 
+}
+
+#userImage {
+    max-width: 70vw;
+    margin: 10px;
 }
 
 .logout {

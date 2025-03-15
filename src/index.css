@@ -2,34 +2,34 @@
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.2; /* Reduce line spacing */
   font-weight: 400;
-
+  
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
-
+  
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
+  
 body {
   margin: 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: flex-start; /* Align everything to the top */
+  align-items: flex-start;
+  justify-content: center; /* Align everything to the top */
   min-width: 320px;
   min-height: 100vh;
 }
-
+  
 h2 {
   margin-bottom: 5px; /* Reduce space between h2 and form */
   font-size: 1.8em;
 }
-
-
-
+  
+  
+  
 button {
   padding: 5px 10px; /* Reduce button padding */
   margin-top: 5px; /* Reduce space above the button */

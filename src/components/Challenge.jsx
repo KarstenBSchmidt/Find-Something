@@ -168,6 +168,7 @@ function Challenge() {
 
     return (
         <div className="challenge-container">
+            <h2>Find Something</h2>
             <div id="inputContainer">
                 <div id="sliderWithCaption">
                     <label htmlFor="distance-slider">

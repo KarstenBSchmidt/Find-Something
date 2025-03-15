@@ -1,184 +1,209 @@
-import React, { useState, useEffect } from "react";
-import * as tf from "@tensorflow/tfjs"; 
+import React, { useState, useEffect, useRef } from "react";
+import * as tf from "@tensorflow/tfjs";
 import * as mobilenet from "@tensorflow-models/mobilenet";
 
 const targetObjects = [
-  "cat",
-  "dog",
-  "bike",
-  "stop sign",
-  "drinking fountain",
-  "crosswalk",
-  "cup",
-  "clock",
-  "chair",
-  "table",
-  "bottle", 
-  "car", 
-  "truck",
-  "bus",
-  "traffic light",
-  "fire hydrant",
-  "parking meter",
-  "bench", 
-  "tree"
+  "stop sign", "traffic light", "crosswalk", "streetlight", "fire hydrant", 
+  "parking meter", "mailbox", "manhole cover",
+  "storefront", "ATM machine", "bench", "trash can", "bus stop", 
+  "subway entrance", "newspaper stand", "billboard", "fountain", "clock tower",
+  "car", "bus", "truck", "bicycle", "motorcycle", "taxi", "scooter", "skateboard", 
+  "pedestrian crossing signal",
+  "coffee shop", "restaurant sign", "grocery cart", "shopping bag", 
+  "street vendor cart", "outdoor seating",
+  "jogger", "dog walker", "cyclist", "street performer", "construction worker", 
+  "delivery person", "person with an umbrella",
+  "tree", "bush", "flower bed", "pigeon", "park bench", "drinking fountain",
+  "shopping cart", "public bicycle rack", "trash bin", "recycling bin", "electric scooter"
 ];
 
 const CompareImage = () => {
-  const [image, setImage] = useState(null);
   const [model, setModel] = useState(null);
   const [results, setResults] = useState([]);
   const [target, setTarget] = useState(null);
   const [score, setScore] = useState(0);
   const [message, setMessage] = useState("");
+  const [cameraOn, setCameraOn] = useState(false);
+  const videoRef = useRef(null);
+  const canvasRef = useRef(null);
+  const [imageURL, setImageURL] = useState(null);
 
-  // Set TensorFlow backend and load the model
+  // Load the TensorFlow model
   useEffect(() => {
     const setupModel = async () => {
       try {
         await tf.setBackend("cpu");
-        console.log("Using CPU backend");
         const loadedModel = await mobilenet.load();
         setModel(loadedModel);
-        console.log("Model loaded successfully.");
       } catch (error) {
         console.error("Error loading model:", error);
         setMessage("Error loading model. Please refresh the page.");
       }
     };
-
     setupModel();
+    generateTarget(); // Generate a target when the component mounts
   }, []);
-  
-  // Generate a random target from the list
-  // Reference: https://www.tensorflow.org/js/models
-  // Look up the full list of objects that the TensorFlow model can recognize and update in CompareImage.jsx
+
+  // Generate a new target object
   const generateTarget = () => {
-    const randomTarget =
-      targetObjects[Math.floor(Math.random() * targetObjects.length)];
+    const randomTarget = targetObjects[Math.floor(Math.random() * targetObjects.length)];
     setTarget(randomTarget);
     setMessage("");
     setResults([]);
-    setImage(null);
-    console.log("New target generated:", randomTarget);
+    setImageURL(null);
   };
 
-  // Generate initial target on component mount
+  // Start the camera
+  // Ref: https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
   useEffect(() => {
-    generateTarget();
-  }, []);
-
-  const handleImageUpload = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      console.log("Image uploaded:", imageUrl);
-      setImage(imageUrl);
-      setMessage("");
-      setResults([]);
+    if (cameraOn) {
+      const startCamera = async () => {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
+          if (videoRef.current) {
+            videoRef.current.srcObject = stream;
+          }
+        } catch (error) {
+          console.error("Error accessing camera:", error);
+          setMessage("Cant find a camera.");
+        }
+      };
+      startCamera();
     }
+  }, [cameraOn]);
+
+  // Stop the camera
+  const stopCamera = () => {
+    if (videoRef.current && videoRef.current.srcObject) {
+      videoRef.current.srcObject.getTracks().forEach(track => track.stop());
+      videoRef.current.srcObject = null;
+    }
+    setCameraOn(false);
   };
 
-  // Analyze the uploaded image and compare it to the target using MobileNet
-  // Reference: https://www.tensorflow.org/js/models
-  //            https://www.tensorflow.org/js/tutorials/transfer/image_classification
+  // Capture an image from the video feed
+  const captureImage = () => {
+    if (!cameraOn) return;
+
+    const canvas = canvasRef.current;
+    const video = videoRef.current;
+    const context = canvas.getContext("2d");
+
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    const capturedImageURL = canvas.toDataURL("image/png");
+    setImageURL(capturedImageURL);
+    setMessage("");
+    setResults([]);
+    stopCamera(); // Stop camera after capturing image
+  };
+
+  // Analyze the captured image
   const analyzeImage = async () => {
     if (!model) {
-      console.log("Model is not loaded yet.");
-      setMessage("Model is still loading. Please wait.");
+      setMessage("Hold up, the model is still loading");
       return;
     }
-    if (!image) {
-      console.log("No image selected.");
+    if (!imageURL) {
       setMessage("Take a picture first.");
       return;
     }
 
+    // Analyze the image using the TensorFlow model
+    // Ref: https://www.tensorflow.org/js/guide/tensors_operations
     try {
-      // Create a temporary image element from the uploaded image
-      // - Used to decode the image before passing it to MobileNet
-      // Reference: https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/decode
       const imgElement = document.createElement("img");
-      imgElement.src = image;
-      console.log("Starting to decode the image...");
+      imgElement.src = imageURL;
       await imgElement.decode();
-      console.log("Image decoded and loaded for analysis.");
 
-      // Get predictions from MobileNet
       const predictions = await model.classify(imgElement);
-      console.log("Predictions received:", predictions);
       setResults(predictions);
 
-      // Check if any prediction matches the target (not worried about case sensitivity)
       const isMatch = predictions.some((prediction) =>
-        prediction.className.toLowerCase().includes(target.toLowerCase())
+        prediction.className.toLowerCase().includes(target?.toLowerCase())
       );
 
-      if (isMatch) {
-        setScore((prevScore) => {
-          const newScore = prevScore + 1;
-          setMessage(`Yep, that's a ${target}!`);
-          return newScore;
-        });
-      } else {
-        setMessage(`Thats not a ${target}`);
-      }
+      setMessage(isMatch ? `Yep, that's a ${target}!` : `That's not a ${target}`);
+      if (isMatch) setScore((prev) => prev + 1);
     } catch (error) {
-      console.error("Error anaylzing image:", error);
+      console.error("Error analyzing image:", error);
       setMessage("An error occurred during analysis.");
     }
   };
 
+  // Cleanup when the component unmounts or the window is closed
+  // Ref: https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event
+  useEffect(() => {
+    const handleUnload = () => {
+      stopCamera();
+      if (imageURL) URL.revokeObjectURL(imageURL);
+    };
+
+    window.addEventListener("beforeunload", handleUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleUnload);
+      handleUnload();
+    };
+  }, [imageURL]);
+
   return (
-    <div >
+    <div style={{ maxWidth: "75vw"}}>
       {target && (
         <>
-            <h2>
-                Find some
-            </h2>
-            <h2>
-                <span className="highlight-text">{target}s</span>
-            </h2>
+          <h2>Find a</h2>
+          <h2>
+            <span className="highlight-text">{target}</span>
+          </h2>
         </>
-        
       )}
-      <div className="container-row">
-        <button onClick={generateTarget}>New Target</button>
-        <button onClick={analyzeImage} disabled={!model || !image}>
-          Analyze
-        </button>
+
+      <div className="button-container">
+          <button onClick={generateTarget}>New Target</button>
+          <button onClick={analyzeImage} disabled={!model || !imageURL}>
+            Analyze
+          </button>
       </div>
+
+      {/* Video element*/}
+      <video ref={videoRef} autoPlay playsInline style={{ width: "100%", display: cameraOn ? "block" : "none" }} />
+
+      {imageURL && (
+          <div>
+            <img src={imageURL} alt="Captured" id="userImage"/>
+          </div>
+      )}
+
       <div className="container-column">
-      {image && (
-        <img
-          src={image}
-          alt="Uploaded"
-        />
-      )}
-      <input 
-        type="file" 
-        accept="image/*" 
-        onChange={handleImageUpload}
-        style={{justifySelf: "center"}} 
-        />
+
+        {!cameraOn && !imageURL && (
+          <button onClick={() => setCameraOn(true)}>Open Camera</button>
+        )}
+
+        {cameraOn && <button onClick={captureImage}>Capture Photo</button>}
+
+        <canvas ref={canvasRef} style={{ display: "none" }}></canvas>
+
       </div>
-      {message && (
-        <div>
-          <p >{message}</p>
-        </div>
-      )}
+
+      {/* Message */}
+      {message && <div><p>{message}</p></div>}
+
+      {/* Predictions */}
       {results.length > 0 && (
         <div className="sub-section">
-            <h2 className="sub-section-header">That looks like a:</h2>
-            <ul>
-              {results.map((result, index) => (
-                <li key={index}>
-                  {result.className} - {Math.round(result.probability * 100)}%
-                </li>
-              ))}
-            </ul>
+          <h2 className="sub-section-header">That looks like a:</h2>
+          <ul>
+            {results.map((result, index) => (
+              <li key={index}>
+                {result.className} - {Math.round(result.probability * 100)}%
+              </li>
+            ))}
+          </ul>
         </div>
       )}
+
       <div className="mt-4">
         <p className="text-xl">Score: {score}</p>
       </div>
@@ -187,6 +212,9 @@ const CompareImage = () => {
 };
 
 export default CompareImage;
+
+
+
 
 
 
