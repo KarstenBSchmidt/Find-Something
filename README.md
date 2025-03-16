@@ -29,7 +29,7 @@ Login or create an account
 
 Go into the dashboard and click "Create a project"
 
-Follow the instructions filling in required details
+Follow the instructions filling in required details for a web version (not iOS or Android).
 
 You will recieve all .env variables such as your Firebase API key
 
