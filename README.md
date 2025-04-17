@@ -4,6 +4,10 @@ This CSS 481 Web Programming And Applications project was developed by Karsten S
 
 This application finds places to bike to, walk to or see around you. This is displayed on a map, which draws your route. 
 
+We started this project using Vite. 
+```npm i vite@latest```
+We then built out using various libraries and services such as OpenStreetMap, leaflet and Firebase.
+
 As of 4/17/2025, the site is up at: findsomething.netlify.app
 
 ## Setup
