@@ -37,7 +37,7 @@ You will recieve all .env variables such as your Firebase API key
 
 Once done, go into your project and select "Firestore", follow the instructions to enable this and copy and paste the rules in firestorerules.txt into "rules" under the Firstore dashboard
 
-The setup authentication and follow the steps to enable this, under sign-in method, enable Email/Password as your provider
+Then setup authentication and follow the steps to enable this, under sign-in method, enable Email/Password as your provider
 
 Firebase should be all setup for you. Ensure your .env has the proper variables, and connect to your DB
 
