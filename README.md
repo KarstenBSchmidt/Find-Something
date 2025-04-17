@@ -4,7 +4,7 @@ This CSS 481 Web Programming And Applications project was developed by Karsten S
 
 This application finds places to bike to, walk to or see around you. This is displayed on a map, which draws your route. 
 
-As of 4/17/2025, the site is up at: https://67db53f78522eda7347e6af8--findsomething.netlify.app/
+As of 4/17/2025, the site is up at: findsomething.netlify.app
 
 ## Setup
 To setup this project, you must first establish a Firebase project with Firestore and Authentication by email and password enabled.
